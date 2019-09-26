@@ -9,6 +9,6 @@ const router = express.Router();
 router.post('/add', authenticate, Validate.admin, TeamController.addTeam);
 router.delete('/delete/:id', authenticate, Validate.admin, TeamController.removeTeam);
 router.put('/update/:id', authenticate, Validate.admin, TeamController.updateTeam);
-router.get('/view', authenticate, Validate.admin, TeamController.viewTeams);
+router.get('/view', authenticate, TeamController.viewTeams);
 
 export default router;

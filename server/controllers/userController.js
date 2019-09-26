@@ -9,12 +9,7 @@ class Auth {
 
       const isAdmin = false;
       const values = { userName, email, password, isAdmin };
-        const user = new User({
-          userName: values.userName,
-          email: values.email,
-          password: values.password,
-          isAdmin: values.isAdmin 
-        });
+        const user = new User(values);
        user.save();
 
       const { id } = user

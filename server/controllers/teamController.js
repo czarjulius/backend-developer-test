@@ -62,8 +62,8 @@ class TeamClass {
       
       if (isAdmin) {
         const { name } = req.body;
-        const result = await Team.updateOne({name},{ _id:id });
-        if (!result) {
+        const result = await Team.updateOne({ _id:id }, {name});
+        if (result.n != 1) {
           return res.status(404).json({
             status: 404,
             message: 'Team not found',
@@ -72,6 +72,7 @@ class TeamClass {
       return res.status(200).json({
         status: 200,
         message: 'Team Updated Successfully',
+        result
       });
       }
             
@@ -85,9 +86,6 @@ class TeamClass {
   static async viewTeams(req, res) {
     try {
       
-      const { isAdmin } = req.authUser; 
-      
-      if (isAdmin) {
         const result = await Team.find();
         if (!result) {
           return res.status(404).json({
@@ -100,7 +98,6 @@ class TeamClass {
         message: 'Teams Fetched Successfully',
         result
       });
-      }
             
     } catch (err) {
       return res.status(500).json({
@@ -109,8 +106,6 @@ class TeamClass {
       });
     }
   }
-
-
 }
 
 export default TeamClass;

@@ -5,11 +5,12 @@ class FixtureClass {
     try {
       const { isAdmin } = req.authUser;  
 
-      const { hostTeamId, awayTeamId } = req.body;
+      const { hostTeamId, awayTeamId, matchDate, isCompleted = false } = req.body;
       const newFixture = {
         hostTeamId,
         awayTeamId,
-        matchDate: Date.now(),
+        matchDate,
+        isCompleted
       }
 
       if (isAdmin) {
@@ -67,13 +68,15 @@ class FixtureClass {
       const { isAdmin } = req.authUser; 
       
       if (isAdmin) {
-        const { hostTeamId, awayTeamId } = req.body;
+        const { hostTeamId, awayTeamId, matchDate, isCompleted } = req.body;
         const newFixture = {
           hostTeamId,
-          awayTeamId
+          awayTeamId,
+          matchDate,
+          isCompleted
         }
-        const result = await Fixture.updateOne({}, { id }, { newFixture });;
-        if (!result) {
+        const result = await Fixture.updateOne({ _id:id }, newFixture);;
+        if (result.n != 1) {
           return res.status(404).json({
             status: 404,
             message: 'Fixture not found',
