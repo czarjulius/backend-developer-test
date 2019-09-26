@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --require @babel/register server.js",
-    "start": "node --require @babel/register server.js"
+    "start": "node --require @babel/register server.js",
+    "seed": "node --require @babel/register ./server/db/seeder/user.js"
   },
   "repository": {
     "type": "git",
