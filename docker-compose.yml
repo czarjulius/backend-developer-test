@@ -1,0 +1,47 @@
+version: '2.1'
+volumes:
+  mongo_data:
+    external: true
+  redis_data:
+    external: true
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    links:
+        - database
+    volumes:
+      -  /usr/app/node_modules
+      - ./:/usr/app
+    ports:
+      - '9090:9090'
+    expose: 
+      - '9090'
+    environment:
+      MONGODB_URI: mongodb://gozman:gozman@database/admin
+    depends_on:
+      - database
+  database:
+    image: mongo
+    expose:
+      - '27017'
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/var/lib/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: gozman
+      MONGO_INITDB_ROOT_PASSWORD: gozman
+      MONGO_INITDB_DATABASE: admin
+  redis:
+    image: redis:5.0-alpine
+    expose:
+      - '6379'
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+
+

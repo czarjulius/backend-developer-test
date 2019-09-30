@@ -167,6 +167,31 @@ class FixtureClass {
       });
     }
   }
+  static async generateUniqueLink(req, res) {
+    const { id } = req.params;
+
+    try {      
+        const result = await Fixture.findOne({ _id: id });
+        if (!result) {
+          return res.status(404).json({
+            status: 404,
+            message: 'Fixture not found',
+          });
+        }
+        const uniqueLink = `url`
+      return res.status(200).json({
+        status: 200,
+        message: 'Pending Fixture Fetched Successfully',
+        result
+      });
+            
+    } catch (err) {
+      return res.status(500).json({
+        status: 500,
+        message: err.message,
+      });
+    }
+  }
 
 
 }
